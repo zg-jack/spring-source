@@ -2,9 +2,9 @@ package com.zhuguang.jack.annotation;
 
 import java.lang.annotation.*;
 
-@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
 @Documented
-public @interface MyComponent {
-    String value() default "";
+public @interface TargetSource {
+    String value() default "ds1";
 }

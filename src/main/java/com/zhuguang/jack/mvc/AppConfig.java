@@ -1,7 +1,11 @@
 package com.zhuguang.jack.mvc;
 
+import com.zhuguang.jack.interceptor.UserInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Component
 /*
@@ -16,5 +20,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 * 把springmvc的功能，给我加上来
 * */
 @EnableWebMvc
-public class AppConfig {
+public class AppConfig extends WebMvcConfigurerAdapter {
+
+    @Autowired
+    private UserInterceptor interceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(interceptor).addPathPatterns("/user/**");
+    }
 }

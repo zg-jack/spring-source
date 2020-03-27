@@ -4,6 +4,7 @@ import com.zhuguang.jack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -15,7 +16,14 @@ public class UserController {
 
     @RequestMapping("/queryUser")
     public @ResponseBody
-    String queryUser() {
-        return userService.queryUser("");
+    String queryUser(@RequestParam String areaCode) {
+        return userService.queryUser(areaCode);
+    }
+
+    @RequestMapping("/exceptionTest")
+    public @ResponseBody String exceptionTest() {
+        String aa = null;
+        aa.substring(0);
+        return aa;
     }
 }

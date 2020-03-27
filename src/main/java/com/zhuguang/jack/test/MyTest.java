@@ -5,10 +5,18 @@ import com.zhuguang.jack.bean.ScopeBean;
 import com.zhuguang.jack.bean.Student;
 import com.zhuguang.jack.bean.Teacher;
 import com.zhuguang.jack.intfClass.InitClass;
+import com.zhuguang.jack.pojo.ConsultConfigArea;
+import com.zhuguang.jack.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+@Slf4j
 public class MyTest {
+
+    @Autowired
+    private UserService userService;
 
     @Test
     public void test1() {
@@ -20,7 +28,7 @@ public class MyTest {
     @Test
     public void test2() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.zhuguang.jack");
-        System.out.println(applicationContext.getBean("&factoryBeanClass"));
+        System.out.println((Student)applicationContext.getBean("factoryBeanClass"));
         System.out.println(applicationContext.getBean(InitClass.class));
 
         System.out.println(applicationContext.getBean(Teacher.class));
@@ -64,5 +72,26 @@ public class MyTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void test5() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.zhuguang.jack");
+        UserService bean = applicationContext.getBean(UserService.class);
+        String cacheResult = bean.queryUser("");
+        log.info(Thread.currentThread().getName() + "========" + cacheResult);
+    }
+
+    @Test
+    public void test6() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.zhuguang.jack");
+        UserService bean = applicationContext.getBean(UserService.class);
+
+        ConsultConfigArea area = new ConsultConfigArea();
+        area.setAreaCode("HB");
+        area.setAreaName("HB");
+        area.setState("1");
+        String cacheResult = bean.addArea(area);
+        log.info(Thread.currentThread().getName() + "========" + cacheResult);
     }
 }
